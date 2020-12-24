@@ -9,7 +9,12 @@ Ter o arquivo para importação em:
 Rodar o comando
  - go run importarCSV.go
 
-# Configurando SQLite
+# Adicionando SQLite
 
 Rodar o comando
  - go get github.com/mattn/go-sqlite3
+
+# Adicionando controle de rodas
+
+Rodar o comando
+ - go get github.com/gorilla/mux
