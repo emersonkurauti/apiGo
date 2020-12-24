@@ -7,6 +7,7 @@ import (
 	"io"
 	"log"
 	"os"
+	"strings"
 
 	_ "github.com/mattn/go-sqlite3"
 )
@@ -47,7 +48,7 @@ func main() {
 		query.Close()
 
 		if !exist {
-			statement.Exec(line[0], line[1], line[2])
+			statement.Exec(line[0], strings.ToUpper(line[1]), line[2])
 		}
 	}
 }
