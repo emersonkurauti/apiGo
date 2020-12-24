@@ -19,3 +19,14 @@ Rodar o comando
 
 Rodar o comando
  - go get github.com/gorilla/mux
+ 
+# Utilizando a API
+
+GET http://localhost:8000/companies
+ - Params:
+  - name
+  - zip
+
+POST http://localhost:8000/companies
+ - Body (Json)
+  - {"name":"MÁRIO MOTOS","zip":"54896","website":"motomario.com.br"}
