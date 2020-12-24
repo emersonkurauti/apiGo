@@ -2,12 +2,13 @@ package main
 
 import (
 	"bufio"
+	"database/sql"
 	"encoding/csv"
-	"encoding/json"
-	"fmt"
 	"io"
 	"log"
 	"os"
+
+	_ "github.com/mattn/go-sqlite3"
 )
 
 type CSV struct {
@@ -23,14 +24,16 @@ func checkErr(err error) {
 }
 
 func main() {
+	database, _ := sql.Open("sqlite3", "./apiGo.db")
+	statement, _ := database.Prepare("CREATE TABLE IF NOT EXISTS companies (id INTEGER PRIMARY KEY, name TEXT, zipcode TEXT)")
+	statement.Exec()
+	statement, _ = database.Prepare("INSERT INTO companies (id, name, zipcode) VALUES (?, ?, ?)")
+
 	csvFile, err := os.Open("Arquivo/q1_catalog.csv")
 	checkErr(err)
 
 	reader := csv.NewReader(bufio.NewReader(csvFile))
 	reader.Comma = ';'
-
-	var empresa []CSV
-
 	for {
 		line, err := reader.Read()
 		if err == io.EOF {
@@ -38,14 +41,13 @@ func main() {
 		} else if err != nil {
 			checkErr(err)
 		}
-		empresa = append(empresa, CSV{
-			Id:      line[0],
-			Name:    line[1],
-			ZipCode: line[2],
-		})
-	}
 
-	empresaJSON, err := json.Marshal(empresa)
-	checkErr(err)
-	fmt.Println(string(empresaJSON))
+		query, _ := database.Query("SELECT id FROM companies WHERE id = " + line[0])
+		exist := query.Next()
+		query.Close()
+
+		if !exist {
+			statement.Exec(line[0], line[1], line[2])
+		}
+	}
 }
