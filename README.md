@@ -7,7 +7,8 @@ Ter o arquivo para importação em:
  - Arquivo/q1_catalog.csv
  
 Rodar o comando
- - go run importarCSV.go
+ - go build
+ - ./apiGo
 
 # Adicionando SQLite
 
