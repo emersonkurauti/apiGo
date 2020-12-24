@@ -8,3 +8,8 @@ Ter o arquivo para importação em:
  
 Rodar o comando
  - go run importarCSV.go
+
+# Configurando SQLite
+
+Rodar o comando
+ - go get github.com/mattn/go-sqlite3
